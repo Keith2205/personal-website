@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const poems = await getCollection('poems');
+const stories = await getCollection('stories');
+---
+
+<BaseLayout title="Writing">
+	<h1>Writing</h1>
+
+	<section>
+		<h2>Poems</h2>
+		<ul>
+			{poems.map((entry) => (
+				<li><a href={`/writing/poems/${entry.id}`}>{entry.data.title}</a></li>
+			))}
+		</ul>
+	</section>
+
+	<section>
+		<h2>Stories</h2>
+		<ul>
+			{stories.map((entry) => (
+				<li><a href={`/writing/stories/${entry.id}`}>{entry.data.title}</a></li>
+			))}
+		</ul>
+	</section>
+</BaseLayout>

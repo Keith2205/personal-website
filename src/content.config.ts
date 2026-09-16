@@ -1,18 +1,31 @@
-import { defineCollection } from 'astro:content';
+import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-// Collections are declared but intentionally empty. Add a `schema` to any
-// collection when its first entry lands.
-const projects = defineCollection({
-	loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
+// Every entry carries the same minimal frontmatter for now. Widen a single
+// collection's schema when its needs diverge from the others.
+const baseSchema = z.object({
+	title: z.string(),
+	date: z.coerce.date(),
 });
 
-const writing = defineCollection({
-	loader: glob({ pattern: '**/*.md', base: './src/content/writing' }),
+const projects = defineCollection({
+	loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
+	schema: baseSchema,
+});
+
+const poems = defineCollection({
+	loader: glob({ pattern: '**/*.md', base: './src/content/poems' }),
+	schema: baseSchema,
+});
+
+const stories = defineCollection({
+	loader: glob({ pattern: '**/*.md', base: './src/content/stories' }),
+	schema: baseSchema,
 });
 
 const music = defineCollection({
 	loader: glob({ pattern: '**/*.md', base: './src/content/music' }),
+	schema: baseSchema,
 });
 
-export const collections = { projects, writing, music };
+export const collections = { projects, poems, stories, music };

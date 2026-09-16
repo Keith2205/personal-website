@@ -1,0 +1,22 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+	title: string;
+	date: Date;
+}
+
+const { title, date } = Astro.props;
+
+// Frontmatter dates parse as UTC midnight, so format in UTC too; local
+// formatting would render the previous day west of Greenwich.
+const iso = date.toISOString().slice(0, 10);
+---
+
+<BaseLayout title={title}>
+	<article>
+		<h1>{title}</h1>
+		<p><time datetime={iso}>{iso}</time></p>
+		<slot />
+	</article>
+</BaseLayout>
