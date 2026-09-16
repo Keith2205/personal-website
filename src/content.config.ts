@@ -23,9 +23,4 @@ const stories = defineCollection({
 	schema: baseSchema,
 });
 
-const music = defineCollection({
-	loader: glob({ pattern: '**/*.md', base: './src/content/music' }),
-	schema: baseSchema,
-});
-
-export const collections = { projects, poems, stories, music };
+export const collections = { projects, poems, stories };
