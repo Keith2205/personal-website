@@ -1,11 +1,455 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Mirrors drafts/sketchbook-reference.html, which was a fixed 1280x800 mockup.
+// The drawings, palette, copy and animation timing come from it verbatim; the
+// absolute positioning does not — this lays out on a grid so it survives a
+// phone. The homepage draws its own nav, so the shared one is switched off.
+const FONTS =
+	'https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap';
 ---
 
-<BaseLayout title="Keith Rodrigues">
-	<h1>Keith Rodrigues</h1>
-	<p>
-		Placeholder intro. A sentence or two about who I am, what I build, and what
-		I write — to be replaced once the structure settles.
-	</p>
+<BaseLayout title="Keith Rodrigues" nav={false}>
+	<Fragment slot="head">
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="stylesheet" href={FONTS} />
+	</Fragment>
+
+	<div class="page">
+		<div class="binding" aria-hidden="true"></div>
+
+		<div class="sheet">
+			<nav class="nav">
+				<a href="/projects">Projects</a>
+				<a href="/writing">Writing</a>
+				<a href="/about">About</a>
+			</nav>
+
+			<header class="intro">
+				<h1>Keith Rodrigues</h1>
+				<svg class="swash" width="440" height="24" viewBox="0 0 440 24" aria-hidden="true">
+					<path
+						class="draw-fast"
+						style="--d: .3s"
+						d="M4 14 C 90 6, 200 18, 300 10 S 420 8, 436 12"
+						fill="none"
+						stroke="#2F3A5C"
+						stroke-width="3"
+						stroke-linecap="round"></path>
+				</svg>
+				<p class="blurb late" style="--d: .9s">Before I ever wrote code, I wanted to play football for my county. That didn’t happen, so I picked the other thing I’d loved since school — computers, because they’re logical: they do exactly what you tell them, or show you exactly where you went wrong. Now I build backend systems for a living. The part of me that wanted the pitch never left, though. It just found other ways out — which is what most of this site is: poems, stories, and the things I build along the way.</p>
+			</header>
+
+			<div class="laptop">
+				<svg
+					class="laptop-art"
+					width="540"
+					height="380"
+					viewBox="0 0 540 380"
+					role="img"
+					aria-label="Hand-drawn sketch of a laptop">
+					<path
+						class="draw"
+						d="M42 24 C 150 19, 300 21, 420 27 L 424 262 C 300 266, 160 262, 44 265 Z"
+						fill="none"
+						stroke="#2A2620"
+						stroke-width="2.4"
+						stroke-linejoin="round"
+						stroke-linecap="round"></path>
+					<path
+						class="draw ghost"
+						style="--d: .4s"
+						d="M47 21 L 417 30 L 421 258 L 39 261 Z"
+						fill="none"
+						stroke="#2A2620"
+						stroke-width="1.4"
+						stroke-linecap="round"></path>
+					<path
+						class="draw"
+						style="--d: .8s"
+						d="M66 46 L 400 48 L 403 240 L 63 238 Z"
+						fill="none"
+						stroke="#2A2620"
+						stroke-width="1.8"
+						stroke-linecap="round"></path>
+					<path
+						class="draw"
+						style="--d: 1.2s"
+						d="M24 268 L 444 266 L 512 318 C 360 326, 160 326, 8 322 Z"
+						fill="none"
+						stroke="#2A2620"
+						stroke-width="2.4"
+						stroke-linejoin="round"
+						stroke-linecap="round"></path>
+					<path
+						class="draw ghost"
+						style="--d: 1.5s"
+						d="M30 271 L 440 271 L 505 321 L 14 319"
+						fill="none"
+						stroke="#2A2620"
+						stroke-width="1.4"
+						stroke-linecap="round"></path>
+					<path
+						class="draw-fast"
+						style="--d: 1.9s"
+						d="M214 290 L 302 289 L 306 308 L 210 309 Z"
+						fill="none"
+						stroke="#2A2620"
+						stroke-width="1.6"
+						stroke-linecap="round"></path>
+					<path
+						class="draw-fast"
+						style="--d: 2.1s"
+						d="M90 280 L 130 279 M150 279 L 196 280 M320 279 L 360 280 M380 280 L 420 279"
+						fill="none"
+						stroke="#2A2620"
+						stroke-width="1.4"
+						stroke-linecap="round"></path>
+					<g class="late" style="--d: 2.2s" font-family="Caveat, cursive" font-size="30" fill="#2F3A5C">
+						<text x="92" y="98">while (alive) {'{'}</text>
+						<text x="124" y="138">build();</text>
+						<text x="124" y="178">write();</text>
+						<text x="92" y="218">{'}'}</text>
+					</g>
+				</svg>
+			</div>
+
+			<div class="scrap">
+				<span class="tape" aria-hidden="true"></span>
+				<span class="scrap-label">poem —</span>
+				<a class="scrap-link" href="/writing/poems/the-ore">The Ore</a>
+				<p>Before the “I” was cut and sewn,<br />a sound was given, not my own.<br />No child yet answers to a name,<br />I only cried, and crying, came.</p>
+			</div>
+
+			<div class="build">
+				<svg class="arrow late" style="--d: 3s" width="120" height="70" viewBox="0 0 120 70" aria-hidden="true">
+					<path
+						d="M20 6 C 30 40, 60 58, 96 56 M84 46 L 98 56 L 84 64"
+						fill="none"
+						stroke="#C0563A"
+						stroke-width="2.2"
+						stroke-linecap="round"
+						stroke-linejoin="round"></path>
+				</svg>
+				<a class="note late" style="--d: 3.2s" href="/projects/credit-card-fraud-detection">
+					<span class="note-label">latest build</span>
+					<span class="note-title">Credit Card Fraud Detection</span>
+					<span class="note-body">10 models, real-world imbalance kept.</span>
+				</a>
+			</div>
+		</div>
+	</div>
 </BaseLayout>
+
+<style>
+	:global(body) {
+		margin: 0;
+		background: #f4eedf;
+	}
+
+	.page {
+		position: relative;
+		min-height: 100vh;
+		overflow-x: hidden;
+		background: #f4eedf;
+		color: #2a2620;
+		font-family: 'Newsreader', Georgia, serif;
+	}
+
+	a {
+		color: #2f3a5c;
+		text-decoration: none;
+	}
+
+	a:hover {
+		color: #1a2340;
+	}
+
+	/* --- animation ------------------------------------------------------- */
+	/* Each element carries its own `--d` delay inline, matching the mockup's
+	   timing. Longhands rather than the `animation` shorthand so a var() can
+	   carry the delay. */
+	.draw,
+	.draw-fast,
+	.late {
+		animation-delay: var(--d, 0s);
+		animation-timing-function: ease;
+		animation-fill-mode: forwards;
+	}
+
+	.draw,
+	.draw-fast {
+		animation-name: draw;
+	}
+
+	.draw {
+		stroke-dasharray: 1600;
+		stroke-dashoffset: 1600;
+		animation-duration: 2.6s;
+	}
+
+	.draw-fast {
+		stroke-dasharray: 600;
+		stroke-dashoffset: 600;
+		animation-duration: 1.2s;
+	}
+
+	.late {
+		opacity: 0;
+		animation-name: fade;
+		animation-duration: 0.9s;
+	}
+
+	/* The doubled pencil lines that make the sketch look hand-drawn. */
+	.ghost {
+		opacity: 0.55;
+	}
+
+	@keyframes draw {
+		to {
+			stroke-dashoffset: 0;
+		}
+	}
+
+	@keyframes fade {
+		to {
+			opacity: 1;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.draw,
+		.draw-fast {
+			animation: none;
+			stroke-dashoffset: 0;
+		}
+
+		.late {
+			animation: none;
+			opacity: 1;
+		}
+	}
+
+	/* --- layout ---------------------------------------------------------- */
+	/* Mobile first: one column in source order — name, laptop, poem, note. */
+	.sheet {
+		display: grid;
+		gap: 44px;
+		max-width: 1280px;
+		margin: 0 auto;
+		padding: 28px 22px 64px;
+	}
+
+	/* Only drawn once there's a margin wide enough to hold it. */
+	.binding {
+		display: none;
+	}
+
+	.nav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: clamp(18px, 5vw, 44px);
+		font-family: 'Caveat', cursive;
+		font-size: clamp(26px, 6vw, 32px);
+	}
+
+	.nav a {
+		padding: 4px 10px;
+	}
+
+	.intro {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	}
+
+	.intro h1 {
+		margin: 0;
+		font-family: 'Caveat', cursive;
+		font-weight: 700;
+		font-size: clamp(54px, 12vw, 92px);
+		line-height: 1;
+		transform: rotate(-2deg);
+		transform-origin: left;
+	}
+
+	.swash {
+		width: 100%;
+		max-width: 440px;
+		height: auto;
+	}
+
+	.blurb {
+		margin: 14px 0 0;
+		max-width: 480px;
+		font-size: clamp(17px, 2.1vw, 19px);
+		line-height: 1.6;
+		color: #3e382e;
+	}
+
+	.laptop-art {
+		width: 100%;
+		max-width: 540px;
+		height: auto;
+	}
+
+	.scrap {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		max-width: 460px;
+		padding: 30px 34px 28px;
+		background: #fffdf7;
+		box-shadow: 0 2px 6px rgba(60, 50, 30, 0.12);
+		transform: rotate(-1.2deg);
+	}
+
+	.tape {
+		position: absolute;
+		top: -12px;
+		left: 50%;
+		width: 100px;
+		height: 26px;
+		background: rgba(214, 196, 150, 0.55);
+		transform: translateX(-50%) rotate(2deg);
+	}
+
+	.scrap-label {
+		font-family: 'Caveat', cursive;
+		font-size: 24px;
+		color: #c0563a;
+	}
+
+	.scrap-link {
+		font-size: clamp(22px, 3vw, 26px);
+		color: #2a2620;
+	}
+
+	.scrap-link:hover {
+		color: #1a2340;
+	}
+
+	.scrap p {
+		margin: 0;
+		font-style: italic;
+		font-size: clamp(16px, 2.1vw, 18px);
+		line-height: 1.65;
+		color: #3e382e;
+	}
+
+	.build {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 4px;
+	}
+
+	.arrow {
+		width: 120px;
+		max-width: 100%;
+		height: auto;
+		margin-left: 40px;
+	}
+
+	.note {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		max-width: 320px;
+		padding: 24px 26px;
+		background: #f6e27f;
+		box-shadow: 0 3px 8px rgba(60, 50, 30, 0.18);
+		color: #2a2620;
+		transform: rotate(2deg);
+	}
+
+	.note:hover {
+		color: #2a2620;
+		box-shadow: 0 6px 14px rgba(60, 50, 30, 0.24);
+	}
+
+	.note-label {
+		font-family: 'Caveat', cursive;
+		font-size: 24px;
+		color: #7a5b12;
+	}
+
+	.note-title {
+		font-size: 22px;
+	}
+
+	.note-body {
+		font-size: 16px;
+		line-height: 1.5;
+		color: #4a3f24;
+	}
+
+	/* Two columns once there's room for the sketch beside the words, which is
+	   also the point the spiral margin stops stealing usable width. */
+	@media (min-width: 900px) {
+		.page {
+			padding-left: 56px;
+		}
+
+		.binding {
+			display: block;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			width: 56px;
+			border-right: 1px dashed #cfc3a8;
+			background-color: #e9e1cd;
+			/* One ring per 44px tile, so the binding fills whatever height the
+			   page turns out to be. Matches the mockup's 18px ring with a 2px
+			   border and a 26px gap. */
+			background-image: radial-gradient(
+				circle at 28px 22px,
+				#f4eedf 0 7px,
+				#9c927e 7px 9px,
+				transparent 9px
+			);
+			background-size: 56px 44px;
+			background-position: 0 12px;
+			background-repeat: repeat-y;
+		}
+
+		.sheet {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			grid-template-areas:
+				'nav nav'
+				'intro laptop'
+				'scrap build';
+			align-items: start;
+			column-gap: 32px;
+			row-gap: 56px;
+			padding: 40px 80px 80px 54px;
+		}
+
+		.nav {
+			grid-area: nav;
+			justify-self: end;
+		}
+
+		.intro {
+			grid-area: intro;
+		}
+
+		/* Nudges that restore the mockup's off-the-grid, pasted-in feel. */
+		.laptop {
+			grid-area: laptop;
+			margin-top: 46px;
+		}
+
+		.scrap {
+			grid-area: scrap;
+		}
+
+		.build {
+			grid-area: build;
+			margin-top: 24px;
+		}
+	}
+</style>
