@@ -233,8 +233,15 @@ const FONTS =
 
 	/* --- layout ---------------------------------------------------------- */
 	/* Mobile first: one column in source order — name, laptop, poem, note. */
+	/* Centred and capped at the mockup's width. border-box so the cap counts
+	   the padding — otherwise the page keeps spreading past 1280 on a wide
+	   screen. The paper underneath it still runs the full viewport. */
 	.sheet {
 		display: grid;
+		/* minmax(0, …) so the fixed card widths below can't push the track
+		   wider than the screen — an auto track would size to them. */
+		grid-template-columns: minmax(0, 1fr);
+		box-sizing: border-box;
 		gap: 44px;
 		max-width: 1280px;
 		margin: 0 auto;
@@ -298,8 +305,11 @@ const FONTS =
 		position: relative;
 		display: flex;
 		flex-direction: column;
+		box-sizing: border-box;
 		gap: 10px;
-		max-width: 460px;
+		/* The mockup's 460px of text plus its 34px side padding. */
+		width: 528px;
+		max-width: 100%;
 		padding: 30px 34px 28px;
 		background: #fffdf7;
 		box-shadow: 0 2px 6px rgba(60, 50, 30, 0.12);
@@ -356,8 +366,12 @@ const FONTS =
 	.note {
 		display: flex;
 		flex-direction: column;
+		box-sizing: border-box;
 		gap: 8px;
-		max-width: 320px;
+		/* The mockup's 320px of text plus its 26px side padding. Without a
+		   set width the note shrink-wraps its title instead. */
+		width: 372px;
+		max-width: 100%;
 		padding: 24px 26px;
 		background: #f6e27f;
 		box-shadow: 0 3px 8px rgba(60, 50, 30, 0.18);
@@ -389,10 +403,6 @@ const FONTS =
 	/* Two columns once there's room for the sketch beside the words, which is
 	   also the point the spiral margin stops stealing usable width. */
 	@media (min-width: 900px) {
-		.page {
-			padding-left: 56px;
-		}
-
 		.binding {
 			display: block;
 			position: absolute;
@@ -416,6 +426,10 @@ const FONTS =
 			background-repeat: repeat-y;
 		}
 
+		/* The left padding clears the binding (56px) and then reproduces the
+		   mockup's 54px gutter, so content starts at 110px exactly as it did
+		   there. The binding itself is pinned to the viewport, not to this
+		   container, so on a wide screen paper shows between the two. */
 		.sheet {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 			grid-template-areas:
@@ -424,8 +438,8 @@ const FONTS =
 				'scrap build';
 			align-items: start;
 			column-gap: 32px;
-			row-gap: 56px;
-			padding: 40px 80px 80px 54px;
+			row-gap: 28px;
+			padding: 40px 80px 80px 110px;
 		}
 
 		.nav {
@@ -437,19 +451,23 @@ const FONTS =
 			grid-area: intro;
 		}
 
-		/* Nudges that restore the mockup's off-the-grid, pasted-in feel. */
+		/* A small drop, as in the mockup — but not so much that it stretches
+		   the row and pushes the scrap away from the paragraph. */
 		.laptop {
 			grid-area: laptop;
-			margin-top: 46px;
+			margin-top: 24px;
 		}
 
 		.scrap {
 			grid-area: scrap;
 		}
 
+		/* Starts the arrow just under the scrap's top edge, so the 70px arrow
+		   plus the column gap drop the note to roughly 80px below it — the
+		   offset the mockup had between the two. */
 		.build {
 			grid-area: build;
-			margin-top: 24px;
+			margin-top: 10px;
 		}
 	}
 </style>
