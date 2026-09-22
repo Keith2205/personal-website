@@ -55,45 +55,49 @@ const CODE = [
 					</svg>
 				</div>
 
-				<h1 class="name">Keith Rodrigues</h1>
-				<svg class="underline" viewBox="0 0 300 18" preserveAspectRatio="none" aria-hidden="true">
-					<path
-						d="M4 11.5 C 46 5.4, 104 6.2, 150 8.1 C 199 10.1, 252 7.4, 296 5.2 C 252 12.6, 198 15.4, 148 13.6 C 100 11.9, 48 13.4, 4 11.5 Z"
-						fill="#0B44C4"></path>
-				</svg>
+				<div class="who-name">
+					<h1 class="name">Keith Rodrigues</h1>
+					<svg class="underline" viewBox="0 0 300 18" preserveAspectRatio="none" aria-hidden="true">
+						<path
+							d="M4 11.5 C 46 5.4, 104 6.2, 150 8.1 C 199 10.1, 252 7.4, 296 5.2 C 252 12.6, 198 15.4, 148 13.6 C 100 11.9, 48 13.4, 4 11.5 Z"
+							fill="#0B44C4"></path>
+					</svg>
+				</div>
 
 				<p class="bio">
 					Computer Science graduate who builds backend systems and writes poems and
 					stories. This site is where both sides meet.
 				</p>
 
-				<hr class="rule" />
+				<div class="who-facts">
+					<hr class="rule" />
 
-				<ul class="facts">
-					<li>
-						<svg viewBox="0 0 24 24" aria-hidden="true">
-							<path d="M2.4 8.6 L12 4.1 L21.6 8.6 L12 13.1 Z" />
-							<path d="M6.2 10.4 V15.6 C8 17.3, 16 17.3, 17.8 15.6 V10.4" />
-							<path d="M20.6 9.1 V14.2" />
-						</svg>
-						<span>Building with Java</span>
-					</li>
-					<li>
-						<svg viewBox="0 0 24 24" aria-hidden="true">
-							<rect x="4.2" y="4.8" width="15.6" height="10.6" rx="1.3" />
-							<path d="M1.9 18.4 H22.1" />
-						</svg>
-						<span>Writing stories and poems</span>
-					</li>
-					<li>
-						<svg viewBox="0 0 24 24" aria-hidden="true">
-							<circle cx="12" cy="12" r="8.9" />
-							<path d="M12 7.5 L15.7 10.2 L14.3 14.5 H9.7 L8.3 10.2 Z" />
-							<path d="M12 7.5 V3.2 M15.7 10.2 L19.8 8.9 M14.3 14.5 L16.9 18.1 M9.7 14.5 L7.1 18.1 M8.3 10.2 L4.2 8.9" />
-						</svg>
-						<span>Football was plan A</span>
-					</li>
-				</ul>
+					<ul class="facts">
+						<li>
+							<svg viewBox="0 0 24 24" aria-hidden="true">
+								<path d="M2.4 8.6 L12 4.1 L21.6 8.6 L12 13.1 Z" />
+								<path d="M6.2 10.4 V15.6 C8 17.3, 16 17.3, 17.8 15.6 V10.4" />
+								<path d="M20.6 9.1 V14.2" />
+							</svg>
+							<span>Building with Java</span>
+						</li>
+						<li>
+							<svg viewBox="0 0 24 24" aria-hidden="true">
+								<rect x="4.2" y="4.8" width="15.6" height="10.6" rx="1.3" />
+								<path d="M1.9 18.4 H22.1" />
+							</svg>
+							<span>Writing stories and poems</span>
+						</li>
+						<li>
+							<svg viewBox="0 0 24 24" aria-hidden="true">
+								<circle cx="12" cy="12" r="8.9" />
+								<path d="M12 7.5 L15.7 10.2 L14.3 14.5 H9.7 L8.3 10.2 Z" />
+								<path d="M12 7.5 V3.2 M15.7 10.2 L19.8 8.9 M14.3 14.5 L16.9 18.1 M9.7 14.5 L7.1 18.1 M8.3 10.2 L4.2 8.9" />
+							</svg>
+							<span>Football was plan A</span>
+						</li>
+					</ul>
+				</div>
 			</aside>
 
 			<!-- ---------------------------------------------------------- -->
@@ -108,75 +112,77 @@ const CODE = [
 				</nav>
 				<hr class="rule nav-rule" />
 
-				<div class="scene">
-					<div class="desk">
-						<img
-							class="brush"
-							src="/images/blue-brush-backdrop.webp"
-							width="1200"
-							height="800"
-							alt=""
-							aria-hidden="true"
-						/>
-						<img
-							class="desk-art"
-							src="/images/workspace.webp"
-							width="1400"
-							height="933"
-							alt="An open laptop on a desk, with a stack of books, a potted plant, an open notebook and pen, a mug of coffee and a football behind it."
-						/>
-						<!-- Covers the illustration's mottled screen so the code sits
-						     on a flat panel. Decorative: the page says elsewhere,
-						     in real text, everything this repeats. -->
-						<div class="screen" style={`clip-path: polygon(${SCREEN_QUAD})`} aria-hidden="true">
-							<div class="code">
-								{CODE.map((line) => (
-									<div class="code-line">
-										<span class="ln">{line.n}</span>
-										<span class="src" style={`padding-left: ${line.indent * 2}ch`}>
-											{line.parts.map(([kind, text]) => <span class={kind}>{text}</span>)}
-										</span>
-									</div>
-								))}
+				<div class="stage">
+					<div class="scene">
+						<div class="desk">
+							<img
+								class="brush"
+								src="/images/blue-brush-backdrop.webp"
+								width="1200"
+								height="800"
+								alt=""
+								aria-hidden="true"
+							/>
+							<img
+								class="desk-art"
+								src="/images/workspace.webp"
+								width="1400"
+								height="933"
+								alt="An open laptop on a desk, with a stack of books, a potted plant, an open notebook and pen, a mug of coffee and a football behind it."
+							/>
+							<!-- Covers the illustration's mottled screen so the code sits
+							     on a flat panel. Decorative: the page says elsewhere,
+							     in real text, everything this repeats. -->
+							<div class="screen" style={`clip-path: polygon(${SCREEN_QUAD})`} aria-hidden="true">
+								<div class="code">
+									{CODE.map((line) => (
+										<div class="code-line">
+											<span class="ln">{line.n}</span>
+											<span class="src" style={`padding-left: ${line.indent * 2}ch`}>
+												{line.parts.map(([kind, text]) => <span class={kind}>{text}</span>)}
+											</span>
+										</div>
+									))}
+								</div>
 							</div>
 						</div>
-					</div>
 
-					<div class="card card-project">
-						<img
-							class="paper"
-							src="/images/blank-paper-card-tape.webp"
-							width="800"
-							height="600"
-							alt=""
-							aria-hidden="true"
-						/>
-						<div class="card-text">
-							<span class="kicker">Latest project</span>
-							<span class="headline">Credit Card Fraud Detection</span>
-							<a class="go" href="/projects/credit-card-fraud-detection">Explore project →</a>
+						<div class="card card-project">
+							<img
+								class="paper"
+								src="/images/blank-paper-card-tape.webp"
+								width="800"
+								height="600"
+								alt=""
+								aria-hidden="true"
+							/>
+							<div class="card-text">
+								<span class="kicker">Latest project</span>
+								<span class="headline">Credit Card Fraud Detection</span>
+								<a class="go" href="/projects/credit-card-fraud-detection">Explore project →</a>
+							</div>
 						</div>
-					</div>
 
-					<div class="card card-writing">
-						<img
-							class="paper"
-							src="/images/blank-paper-card-clip.webp"
-							width="800"
-							height="600"
-							alt=""
-							aria-hidden="true"
-						/>
-						<div class="card-text">
-							<span class="kicker">Featured writing</span>
-							<span class="headline">The Ore</span>
-							<a class="go" href="/writing/poems/the-ore">Read the poem →</a>
+						<div class="card card-writing">
+							<img
+								class="paper"
+								src="/images/blank-paper-card-clip.webp"
+								width="800"
+								height="600"
+								alt=""
+								aria-hidden="true"
+							/>
+							<div class="card-text">
+								<span class="kicker">Featured writing</span>
+								<span class="headline">The Ore</span>
+								<a class="go" href="/writing/poems/the-ore">Read the poem →</a>
+							</div>
 						</div>
-					</div>
 
-					<img class="mark mark-arrow" src="/images/marks/arrow-right.webp" alt="" aria-hidden="true" />
-					<img class="mark mark-star" src="/images/marks/star.webp" alt="" aria-hidden="true" />
-					<img class="mark mark-ticks" src="/images/marks/ticks-left.webp" alt="" aria-hidden="true" />
+						<img class="mark mark-arrow" src="/images/marks/arrow-right.webp" alt="" aria-hidden="true" />
+						<img class="mark mark-star" src="/images/marks/star.webp" alt="" aria-hidden="true" />
+						<img class="mark mark-ticks" src="/images/marks/ticks-left.webp" alt="" aria-hidden="true" />
+					</div>
 				</div>
 			</div>
 		</div>
@@ -223,6 +229,15 @@ const CODE = [
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
+	}
+
+	/* Grouping wrappers: they keep the name with its brushstroke, and the
+	   rule with the three lines, so the desktop column can space the four
+	   blocks apart without prising those pairs open. Full width so the
+	   brushstroke and the rule still measure against the column. */
+	.who-name,
+	.who-facts {
+		align-self: stretch;
 	}
 
 	.portrait {
@@ -530,25 +545,61 @@ const CODE = [
 	/* --- desktop --------------------------------------------------------- */
 
 	@media (min-width: 900px) {
+		/* One screenful: the shell takes whatever height the viewport has and
+		   the two columns divide it, rather than both stacking to their
+		   natural height and leaving the rest of the screen blank. */
+		.page {
+			--shell-pad-y: 36px;
+			/* Past this much column, spreading the four blocks further apart
+			   stops reading as composition and starts reading as gaps. */
+			--who-spread: 780px;
+
+			display: flex;
+			flex-direction: column;
+		}
+
 		.shell {
 			display: grid;
 			grid-template-columns: 28% minmax(0, 1fr);
+			/* The single row fills the shell — `auto` would size it to the
+			   content and put the slack back at the bottom. */
+			grid-template-rows: minmax(0, 1fr);
+			flex: 1;
 			gap: 0 clamp(32px, 4vw, 54px);
-			align-items: start;
-			padding: 44px 32px 90px;
+			max-width: 1400px;
+			padding: var(--shell-pad-y) 32px;
 		}
 
 		.main {
+			display: flex;
+			flex-direction: column;
+			min-height: 0;
 			margin-top: 0;
 		}
 
-		/* The divider between the two columns. `stretch` overrides the grid's
-		   `start` alignment so the rule runs the full height of the taller
-		   column rather than stopping under the last line of text. */
+		/* Stretched by the grid's default alignment, so the divider runs the
+		   full height of the row rather than stopping under the last line. */
 		.who {
-			align-self: stretch;
+			justify-content: space-between;
+			gap: 20px;
+			/* Absorbs whatever height is left over beyond --who-spread, so a
+			   tall screen pads the column rather than prising the four blocks
+			   apart. The padding sits inside the border, so the divider still
+			   runs the full height. */
+			padding-block: max(0px, calc((100vh - 2 * var(--shell-pad-y) - var(--who-spread)) / 2));
 			padding-right: clamp(32px, 4vw, 54px);
 			border-right: 1px solid var(--line);
+		}
+
+		/* space-between owns the spacing here; the authored margins that set
+		   the rhythm in the stacked layout would double up on it. */
+		.who .name,
+		.who .bio {
+			margin-top: 0;
+		}
+
+		.who .rule {
+			margin: 0 0 22px;
 		}
 
 		.portrait {
@@ -556,10 +607,29 @@ const CODE = [
 			max-width: 100%;
 		}
 
+		/* Holds the scene in the space left under the nav and centres it. */
+		.stage {
+			display: flex;
+			flex: 1;
+			align-items: center;
+			justify-content: center;
+			min-height: 0;
+			padding-top: 16px;
+		}
+
 		.scene {
 			position: relative;
 			display: block;
-			margin-top: 34px;
+			/* Everything in the scene is a share of this width, so capping the
+			   width against the height left on screen is what keeps the page
+			   to one screenful. 1.271 is the scene's own width:height — the
+			   desk art's 3:2 plus the 12% of width the padding below adds.
+			   176px is the chrome above and below it: the shell's padding,
+			   the nav and its rule, this stage's padding, and a little slack.
+			   (An aspect-ratio here does not work: when max-width binds,
+			   height:100% wins and the box stretches out of proportion.) */
+			width: min(100%, calc((100vh - 176px) * 1.271));
+			margin-top: 0;
 			container-type: inline-size;
 			/* Room for the cards, which hang off the illustration's corners. */
 			padding: 3% 0 9%;
