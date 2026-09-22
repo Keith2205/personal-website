@@ -1,12 +1,28 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Mirrors drafts/sketchbook-reference.html, which was a fixed 1280x800 mockup.
-// The drawings, palette, copy and animation timing come from it verbatim; the
-// absolute positioning does not — this lays out on a grid so it survives a
-// phone. The homepage draws its own nav, so the shared one is switched off.
+// Two columns divided by a rule: an identity card on the left, and on the
+// right the nav above a layered workspace scene. Everything in the scene is
+// placed in percentages of the desk illustration, so the whole thing scales
+// as one picture instead of drifting apart at odd widths.
+//
+// The homepage draws its own nav, so the shared one is switched off.
 const FONTS =
-	'https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap';
+	'https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap';
+
+// The laptop screen, measured off workspace.webp as a share of the image box.
+// The illustration draws it in perspective, so it is a quadrilateral rather
+// than a rectangle and the overlay is clipped to these four corners. The
+// measured corners are pushed out a shade so the panel laps onto the bezel
+// rather than leaving a sliver of the mottled screen showing at the edges.
+const SCREEN_QUAD = '36.1% 27.9%, 66.6% 29.4%, 64.3% 60.6%, 32.8% 54.9%';
+
+const CODE = [
+	{ n: 1, indent: 0, parts: [['kw', 'class '], ['cls', 'Keith'], ['pun', ':']] },
+	{ n: 2, indent: 1, parts: [['kw', 'def '], ['fn', 'create'], ['pun', '('], ['self', 'self'], ['pun', '):']] },
+	{ n: 3, indent: 2, parts: [['self', 'self'], ['pun', '.'], ['fn', 'build'], ['pun', '()']] },
+	{ n: 4, indent: 2, parts: [['self', 'self'], ['pun', '.'], ['fn', 'write'], ['pun', '()']] }
+];
 ---
 
 <BaseLayout title="Keith Rodrigues" nav={false}>
@@ -17,126 +33,151 @@ const FONTS =
 	</Fragment>
 
 	<div class="page">
-		<div class="binding" aria-hidden="true"></div>
+		<div class="shell">
+			<!-- ---------------------------------------------------------- -->
+			<aside class="who">
+				<div class="portrait">
+					<img src="/images/avatar.webp" width="440" height="469" alt="Portrait of Keith Rodrigues" />
+					<svg class="portrait-ring" viewBox="0 0 100 100" aria-hidden="true">
+						<path
+							d="M50 2.6 C 71.5 2.2, 97.2 23.8, 97.4 49.2 C 97.6 73.6, 74.2 97.6, 49.4 97.4 C 25.8 97.2, 2.4 74.4, 2.6 49.6 C 2.8 24.6, 28.2 3, 50 2.6 Z"
+							fill="none"
+							stroke="#2A2620"
+							stroke-width="2.1"
+							stroke-linecap="round"></path>
+						<path
+							class="ghost"
+							d="M50.6 4.4 C 70.4 4.6, 95.2 25.4, 95.6 49.8 C 96 73, 73.4 95.6, 49.8 95.4 C 27 95.2, 4.4 73.2, 4.6 49.4 C 4.8 25.8, 29.4 4.2, 50.6 4.4 Z"
+							fill="none"
+							stroke="#2A2620"
+							stroke-width="1.1"
+							stroke-linecap="round"></path>
+					</svg>
+				</div>
 
-		<div class="sheet">
-			<nav class="nav">
-				<a href="/projects">Projects</a>
-				<a href="/writing">Writing</a>
-				<a href="/about">About</a>
-			</nav>
-
-			<header class="intro">
-				<h1>Keith Rodrigues</h1>
-				<svg class="swash" width="440" height="24" viewBox="0 0 440 24" aria-hidden="true">
+				<h1 class="name">Keith Rodrigues</h1>
+				<svg class="underline" viewBox="0 0 300 18" preserveAspectRatio="none" aria-hidden="true">
 					<path
-						class="draw-fast"
-						style="--d: .3s"
-						d="M4 14 C 90 6, 200 18, 300 10 S 420 8, 436 12"
-						fill="none"
-						stroke="#2F3A5C"
-						stroke-width="3"
-						stroke-linecap="round"></path>
+						d="M4 11.5 C 46 5.4, 104 6.2, 150 8.1 C 199 10.1, 252 7.4, 296 5.2 C 252 12.6, 198 15.4, 148 13.6 C 100 11.9, 48 13.4, 4 11.5 Z"
+						fill="#0B44C4"></path>
 				</svg>
-				<p class="blurb late" style="--d: .9s">Before I ever wrote code, I wanted to play football for my county. That didn’t happen, so I picked the other thing I’d loved since school — computers, because they’re logical: they do exactly what you tell them, or show you exactly where you went wrong. Now I build backend systems for a living. The part of me that wanted the pitch never left, though. It just found other ways out — which is what most of this site is: poems, stories, and the things I build along the way.</p>
-			</header>
 
-			<div class="laptop">
-				<svg
-					class="laptop-art"
-					width="540"
-					height="380"
-					viewBox="0 0 540 380"
-					role="img"
-					aria-label="Hand-drawn sketch of a laptop">
-					<path
-						class="draw"
-						d="M42 24 C 150 19, 300 21, 420 27 L 424 262 C 300 266, 160 262, 44 265 Z"
-						fill="none"
-						stroke="#2A2620"
-						stroke-width="2.4"
-						stroke-linejoin="round"
-						stroke-linecap="round"></path>
-					<path
-						class="draw ghost"
-						style="--d: .4s"
-						d="M47 21 L 417 30 L 421 258 L 39 261 Z"
-						fill="none"
-						stroke="#2A2620"
-						stroke-width="1.4"
-						stroke-linecap="round"></path>
-					<path
-						class="draw"
-						style="--d: .8s"
-						d="M66 46 L 400 48 L 403 240 L 63 238 Z"
-						fill="none"
-						stroke="#2A2620"
-						stroke-width="1.8"
-						stroke-linecap="round"></path>
-					<path
-						class="draw"
-						style="--d: 1.2s"
-						d="M24 268 L 444 266 L 512 318 C 360 326, 160 326, 8 322 Z"
-						fill="none"
-						stroke="#2A2620"
-						stroke-width="2.4"
-						stroke-linejoin="round"
-						stroke-linecap="round"></path>
-					<path
-						class="draw ghost"
-						style="--d: 1.5s"
-						d="M30 271 L 440 271 L 505 321 L 14 319"
-						fill="none"
-						stroke="#2A2620"
-						stroke-width="1.4"
-						stroke-linecap="round"></path>
-					<path
-						class="draw-fast"
-						style="--d: 1.9s"
-						d="M214 290 L 302 289 L 306 308 L 210 309 Z"
-						fill="none"
-						stroke="#2A2620"
-						stroke-width="1.6"
-						stroke-linecap="round"></path>
-					<path
-						class="draw-fast"
-						style="--d: 2.1s"
-						d="M90 280 L 130 279 M150 279 L 196 280 M320 279 L 360 280 M380 280 L 420 279"
-						fill="none"
-						stroke="#2A2620"
-						stroke-width="1.4"
-						stroke-linecap="round"></path>
-					<g class="late" style="--d: 2.2s" font-family="Caveat, cursive" font-size="30" fill="#2F3A5C">
-						<text x="92" y="98">while (alive) {'{'}</text>
-						<text x="124" y="138">build();</text>
-						<text x="124" y="178">write();</text>
-						<text x="92" y="218">{'}'}</text>
-					</g>
-				</svg>
-			</div>
+				<p class="bio">
+					Computer Science graduate who builds backend systems and writes poems and
+					stories. This site is where both sides meet.
+				</p>
 
-			<div class="scrap">
-				<span class="tape" aria-hidden="true"></span>
-				<span class="scrap-label">poem —</span>
-				<a class="scrap-link" href="/writing/poems/the-ore">The Ore</a>
-				<p>Before the “I” was cut and sewn,<br />a sound was given, not my own.<br />No child yet answers to a name,<br />I only cried, and crying, came.</p>
-			</div>
+				<hr class="rule" />
 
-			<div class="build">
-				<svg class="arrow late" style="--d: 3s" width="120" height="70" viewBox="0 0 120 70" aria-hidden="true">
-					<path
-						d="M20 6 C 30 40, 60 58, 96 56 M84 46 L 98 56 L 84 64"
-						fill="none"
-						stroke="#C0563A"
-						stroke-width="2.2"
-						stroke-linecap="round"
-						stroke-linejoin="round"></path>
-				</svg>
-				<a class="note late" style="--d: 3.2s" href="/projects/credit-card-fraud-detection">
-					<span class="note-label">latest build</span>
-					<span class="note-title">Credit Card Fraud Detection</span>
-					<span class="note-body">10 models, real-world imbalance kept.</span>
-				</a>
+				<ul class="facts">
+					<li>
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M2.4 8.6 L12 4.1 L21.6 8.6 L12 13.1 Z" />
+							<path d="M6.2 10.4 V15.6 C8 17.3, 16 17.3, 17.8 15.6 V10.4" />
+							<path d="M20.6 9.1 V14.2" />
+						</svg>
+						<span>Building with Java</span>
+					</li>
+					<li>
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<rect x="4.2" y="4.8" width="15.6" height="10.6" rx="1.3" />
+							<path d="M1.9 18.4 H22.1" />
+						</svg>
+						<span>Writing stories and poems</span>
+					</li>
+					<li>
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<circle cx="12" cy="12" r="8.9" />
+							<path d="M12 7.5 L15.7 10.2 L14.3 14.5 H9.7 L8.3 10.2 Z" />
+							<path d="M12 7.5 V3.2 M15.7 10.2 L19.8 8.9 M14.3 14.5 L16.9 18.1 M9.7 14.5 L7.1 18.1 M8.3 10.2 L4.2 8.9" />
+						</svg>
+						<span>Football was plan A</span>
+					</li>
+				</ul>
+			</aside>
+
+			<!-- ---------------------------------------------------------- -->
+			<div class="main">
+				<nav class="nav">
+					<a href="/projects">Projects</a>
+					<a href="/writing">Writings</a>
+					<a href="/about">About</a>
+					<a class="logo" href="/" aria-label="Keith Rodrigues — home">
+						<img src="/images/logo.webp" width="200" height="200" alt="" />
+					</a>
+				</nav>
+				<hr class="rule nav-rule" />
+
+				<div class="scene">
+					<div class="desk">
+						<img
+							class="brush"
+							src="/images/blue-brush-backdrop.webp"
+							width="1200"
+							height="800"
+							alt=""
+							aria-hidden="true"
+						/>
+						<img
+							class="desk-art"
+							src="/images/workspace.webp"
+							width="1400"
+							height="933"
+							alt="An open laptop on a desk, with a stack of books, a potted plant, an open notebook and pen, a mug of coffee and a football behind it."
+						/>
+						<!-- Covers the illustration's mottled screen so the code sits
+						     on a flat panel. Decorative: the page says elsewhere,
+						     in real text, everything this repeats. -->
+						<div class="screen" style={`clip-path: polygon(${SCREEN_QUAD})`} aria-hidden="true">
+							<div class="code">
+								{CODE.map((line) => (
+									<div class="code-line">
+										<span class="ln">{line.n}</span>
+										<span class="src" style={`padding-left: ${line.indent * 2}ch`}>
+											{line.parts.map(([kind, text]) => <span class={kind}>{text}</span>)}
+										</span>
+									</div>
+								))}
+							</div>
+						</div>
+					</div>
+
+					<div class="card card-project">
+						<img
+							class="paper"
+							src="/images/blank-paper-card-tape.webp"
+							width="800"
+							height="600"
+							alt=""
+							aria-hidden="true"
+						/>
+						<div class="card-text">
+							<span class="kicker">Latest project</span>
+							<span class="headline">Credit Card Fraud Detection</span>
+							<a class="go" href="/projects/credit-card-fraud-detection">Explore project →</a>
+						</div>
+					</div>
+
+					<div class="card card-writing">
+						<img
+							class="paper"
+							src="/images/blank-paper-card-clip.webp"
+							width="800"
+							height="600"
+							alt=""
+							aria-hidden="true"
+						/>
+						<div class="card-text">
+							<span class="kicker">Featured writing</span>
+							<span class="headline">The Ore</span>
+							<a class="go" href="/writing/poems/the-ore">Read the poem →</a>
+						</div>
+					</div>
+
+					<img class="mark mark-arrow" src="/images/marks/arrow-right.webp" alt="" aria-hidden="true" />
+					<img class="mark mark-star" src="/images/marks/star.webp" alt="" aria-hidden="true" />
+					<img class="mark mark-ticks" src="/images/marks/ticks-left.webp" alt="" aria-hidden="true" />
+				</div>
 			</div>
 		</div>
 	</div>
@@ -149,325 +190,443 @@ const FONTS =
 	}
 
 	.page {
-		position: relative;
+		--ink: #2a2620;
+		--ink-soft: #4a4336;
+		--paper: #f4eedf;
+		--blue: #0b44c4;
+		--navy: #2f3a5c;
+		--line: #cabda0;
+
 		min-height: 100vh;
-		overflow-x: hidden;
-		background: #f4eedf;
-		color: #2a2620;
+		background: var(--paper);
+		color: var(--ink);
 		font-family: 'Newsreader', Georgia, serif;
 	}
 
-	a {
-		color: #2f3a5c;
-		text-decoration: none;
-	}
-
-	a:hover {
-		color: #1a2340;
-	}
-
-	/* --- animation ------------------------------------------------------- */
-	/* Each element carries its own `--d` delay inline, matching the mockup's
-	   timing. Longhands rather than the `animation` shorthand so a var() can
-	   carry the delay. */
-	.draw,
-	.draw-fast,
-	.late {
-		animation-delay: var(--d, 0s);
-		animation-timing-function: ease;
-		animation-fill-mode: forwards;
-	}
-
-	.draw,
-	.draw-fast {
-		animation-name: draw;
-	}
-
-	.draw {
-		stroke-dasharray: 1600;
-		stroke-dashoffset: 1600;
-		animation-duration: 2.6s;
-	}
-
-	.draw-fast {
-		stroke-dasharray: 600;
-		stroke-dashoffset: 600;
-		animation-duration: 1.2s;
-	}
-
-	.late {
-		opacity: 0;
-		animation-name: fade;
-		animation-duration: 0.9s;
-	}
-
-	/* The doubled pencil lines that make the sketch look hand-drawn. */
-	.ghost {
-		opacity: 0.55;
-	}
-
-	@keyframes draw {
-		to {
-			stroke-dashoffset: 0;
-		}
-	}
-
-	@keyframes fade {
-		to {
-			opacity: 1;
-		}
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.draw,
-		.draw-fast {
-			animation: none;
-			stroke-dashoffset: 0;
-		}
-
-		.late {
-			animation: none;
-			opacity: 1;
-		}
-	}
-
-	/* --- layout ---------------------------------------------------------- */
-	/* Mobile first: one column in source order — name, laptop, poem, note. */
-	/* Centred and capped at the mockup's width. border-box so the cap counts
-	   the padding — otherwise the page keeps spreading past 1280 on a wide
-	   screen. The paper underneath it still runs the full viewport. */
-	.sheet {
-		display: grid;
-		/* minmax(0, …) so the fixed card widths below can't push the track
-		   wider than the screen — an auto track would size to them. */
-		grid-template-columns: minmax(0, 1fr);
+	.shell {
 		box-sizing: border-box;
-		gap: 44px;
-		max-width: 1280px;
+		max-width: 1240px;
 		margin: 0 auto;
-		padding: 28px 22px 64px;
+		padding: 32px 16px 72px;
 	}
 
-	/* Only drawn once there's a margin wide enough to hold it. */
-	.binding {
-		display: none;
+	.rule {
+		height: 0;
+		margin: 0;
+		border: 0;
+		border-top: 1px solid var(--line);
+	}
+
+	/* --- left column ----------------------------------------------------- */
+
+	.who {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.portrait {
+		position: relative;
+		width: 190px;
+		max-width: 60%;
+		aspect-ratio: 1;
+	}
+
+	.portrait img {
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		object-fit: cover;
+		/* The artwork sits high in its frame; nudging the crop down keeps the
+		   face centred in the circle instead of cropping the chin. */
+		object-position: 50% 18%;
+		background: #e9e0c9;
+	}
+
+	/* Laid over the photo rather than drawn as a border, so the doubled ink
+	   line reads as one hand-drawn ring. */
+	.portrait-ring {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		overflow: visible;
+	}
+
+	.ghost {
+		opacity: 0.45;
+	}
+
+	.name {
+		margin: 18px 0 0;
+		font-family: 'Caveat', cursive;
+		font-weight: 700;
+		font-size: clamp(38px, 4.4vw, 52px);
+		line-height: 1.05;
+		letter-spacing: 0.01em;
+	}
+
+	.underline {
+		width: 82%;
+		min-width: 190px;
+		height: 13px;
+		margin-top: 8px;
+	}
+
+	.bio {
+		box-sizing: border-box;
+		margin: 22px 0 0;
+		padding: 18px 20px;
+		border: 1px solid var(--ink);
+		background: #fbf6e9;
+		font-size: 16px;
+		line-height: 1.62;
+		color: var(--ink-soft);
+	}
+
+	.who .rule {
+		align-self: stretch;
+		margin: 26px 0;
+	}
+
+	.facts {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.facts li {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		font-size: 16px;
+		color: var(--ink-soft);
+	}
+
+	.facts svg {
+		flex: none;
+		width: 21px;
+		height: 21px;
+		fill: none;
+		stroke: var(--blue);
+		stroke-width: 1.5;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	/* --- nav ------------------------------------------------------------- */
+
+	/* Stacked, the nav follows the three lines of the left column and needs
+	   its own air; side by side it sits at the top of its column instead. */
+	.main {
+		margin-top: 34px;
 	}
 
 	.nav {
 		display: flex;
-		flex-wrap: wrap;
-		gap: clamp(18px, 5vw, 44px);
+		align-items: center;
+		gap: clamp(16px, 3vw, 34px);
 		font-family: 'Caveat', cursive;
-		font-size: clamp(26px, 6vw, 32px);
+		font-size: clamp(24px, 2.6vw, 30px);
 	}
 
 	.nav a {
-		padding: 4px 10px;
+		color: var(--navy);
+		text-decoration: none;
 	}
 
-	.intro {
+	.nav a:hover {
+		color: var(--blue);
+		text-decoration: underline;
+		text-underline-offset: 4px;
+	}
+
+	.logo {
+		margin-left: auto;
+		line-height: 0;
+	}
+
+	.logo img {
+		width: 46px;
+		height: 46px;
+	}
+
+	.nav-rule {
+		margin-top: 12px;
+	}
+
+	/* --- the workspace scene --------------------------------------------- */
+	/* Mobile first: the desk, then the two cards stacked beneath it. */
+
+	.scene {
 		display: flex;
 		flex-direction: column;
-		gap: 6px;
+		gap: 22px;
+		margin-top: 26px;
 	}
 
-	.intro h1 {
-		margin: 0;
-		font-family: 'Caveat', cursive;
-		font-weight: 700;
-		font-size: clamp(54px, 12vw, 92px);
-		line-height: 1;
-		transform: rotate(-2deg);
-		transform-origin: left;
-	}
-
-	.swash {
-		width: 100%;
-		max-width: 440px;
-		height: auto;
-	}
-
-	.blurb {
-		margin: 14px 0 0;
-		max-width: 480px;
-		font-size: clamp(17px, 2.1vw, 19px);
-		line-height: 1.6;
-		color: #3e382e;
-	}
-
-	.laptop-art {
-		width: 100%;
-		max-width: 540px;
-		height: auto;
-	}
-
-	.scrap {
+	.desk {
 		position: relative;
-		display: flex;
-		flex-direction: column;
-		box-sizing: border-box;
-		gap: 10px;
-		/* The mockup's 460px of text plus its 34px side padding. */
-		width: 528px;
-		max-width: 100%;
-		padding: 30px 34px 28px;
-		background: #fffdf7;
-		box-shadow: 0 2px 6px rgba(60, 50, 30, 0.12);
-		transform: rotate(-1.2deg);
+		/* The code panel is sized in cqw so it tracks the illustration rather
+		   than the viewport — the laptop screen is a fixed share of this box. */
+		container-type: inline-size;
 	}
 
-	.tape {
+	.desk-art {
+		position: relative;
+		z-index: 1;
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	/* Behind and above the laptop: the sweep of the stroke crowns the screen.
+	   Same 3:2 aspect as the desk art, so one percentage sets both axes. The
+	   source is a closed loop — clipping to the upper sweep drops the return
+	   stroke, which otherwise trails across empty paper beside the books. */
+	.brush {
 		position: absolute;
-		top: -12px;
-		left: 50%;
-		width: 100px;
-		height: 26px;
-		background: rgba(214, 196, 150, 0.55);
-		transform: translateX(-50%) rotate(2deg);
+		z-index: 0;
+		top: -12%;
+		left: 2%;
+		width: 84%;
+		height: auto;
+		clip-path: inset(0 0 46% 0);
+		opacity: 0.9;
 	}
 
-	.scrap-label {
-		font-family: 'Caveat', cursive;
-		font-size: 24px;
-		color: #c0563a;
+	.screen {
+		position: absolute;
+		z-index: 2;
+		inset: 0;
+		background: #171a21;
 	}
 
-	.scrap-link {
-		font-size: clamp(22px, 3vw, 26px);
-		color: #2a2620;
+	.code {
+		position: absolute;
+		/* The largest rectangle that fits inside the screen quad, less a
+		   margin so no glyph runs into a slanted edge. */
+		top: 33%;
+		left: 38%;
+		font-family: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+		/* The floor keeps the code legible as code on a phone, where 1.8cqw
+		   of a 358px illustration would render at about six pixels. */
+		font-size: max(7px, 1.8cqw);
+		line-height: 1.72;
+		white-space: nowrap;
+		/* The illustration draws the screen tilted a little; matching it keeps
+		   the code sitting on the glass rather than floating over it. */
+		transform: rotate(1.8deg);
+		transform-origin: top left;
 	}
 
-	.scrap-link:hover {
-		color: #1a2340;
+	.code-line {
+		display: flex;
 	}
 
-	.scrap p {
-		margin: 0;
-		font-style: italic;
-		font-size: clamp(16px, 2.1vw, 18px);
-		line-height: 1.65;
-		color: #3e382e;
+	.ln {
+		flex: none;
+		width: 2.2ch;
+		margin-right: 1.1ch;
+		text-align: right;
+		color: #7e8794;
 	}
 
-	.build {
+	.kw {
+		color: #ff7b72;
+	}
+
+	.cls {
+		color: #ffa657;
+	}
+
+	.fn {
+		color: #d2a8ff;
+	}
+
+	.self {
+		color: #79c0ff;
+	}
+
+	.pun {
+		color: #c9d1d9;
+	}
+
+	/* --- the two paper cards --------------------------------------------- */
+
+	.card {
+		position: relative;
+		/* Card text scales with the card, which is a different width on the
+		   phone (full bleed) than on the desktop (a corner of the scene). */
+		container-type: inline-size;
+	}
+
+	.paper {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	/* Inset to the flat middle of the torn sheet, clear of the tape and clip. */
+	.card-text {
+		position: absolute;
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 4px;
+		gap: 1.6cqw;
+		inset: 27% 11% 15% 12%;
+		justify-content: center;
 	}
 
-	.arrow {
-		width: 120px;
-		max-width: 100%;
-		height: auto;
-		margin-left: 40px;
-	}
-
-	.note {
-		display: flex;
-		flex-direction: column;
-		box-sizing: border-box;
-		gap: 8px;
-		/* The mockup's 320px of text plus its 26px side padding. Without a
-		   set width the note shrink-wraps its title instead. */
-		width: 372px;
-		max-width: 100%;
-		padding: 24px 26px;
-		background: #f6e27f;
-		box-shadow: 0 3px 8px rgba(60, 50, 30, 0.18);
-		color: #2a2620;
-		transform: rotate(2deg);
-	}
-
-	.note:hover {
-		color: #2a2620;
-		box-shadow: 0 6px 14px rgba(60, 50, 30, 0.24);
-	}
-
-	.note-label {
+	.kicker {
 		font-family: 'Caveat', cursive;
-		font-size: 24px;
-		color: #7a5b12;
+		font-size: 6.8cqw;
+		line-height: 1;
+		color: #8f5214;
 	}
 
-	.note-title {
-		font-size: 22px;
+	.headline {
+		font-size: 7.8cqw;
+		font-weight: 500;
+		line-height: 1.14;
+		color: var(--ink);
 	}
 
-	.note-body {
-		font-size: 16px;
-		line-height: 1.5;
-		color: #4a3f24;
+	.go {
+		font-size: 4.8cqw;
+		color: var(--blue);
+		text-decoration: none;
 	}
 
-	/* Two columns once there's room for the sketch beside the words, which is
-	   also the point the spiral margin stops stealing usable width. */
+	/* Makes the whole card clickable while leaving one properly labelled
+	   link for the keyboard and the screen reader. */
+	.go::after {
+		content: '';
+		position: absolute;
+		inset: -6% -4%;
+	}
+
+	.card:hover .go,
+	.go:focus-visible {
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
+	/* The clipped sheet is torn a little lower and carries its clip in the
+	   middle of the top edge, so its text starts further down than the taped
+	   one's. */
+	.card-writing .card-text {
+		inset: 30% 11% 14% 12%;
+	}
+
+	/* Decorative accents, desktop only. */
+	.mark {
+		display: none;
+	}
+
+	/* --- desktop --------------------------------------------------------- */
+
 	@media (min-width: 900px) {
-		.binding {
-			display: block;
-			position: absolute;
-			top: 0;
-			bottom: 0;
-			left: 0;
-			width: 56px;
-			border-right: 1px dashed #cfc3a8;
-			background-color: #e9e1cd;
-			/* One ring per 44px tile, so the binding fills whatever height the
-			   page turns out to be. Matches the mockup's 18px ring with a 2px
-			   border and a 26px gap. */
-			background-image: radial-gradient(
-				circle at 28px 22px,
-				#f4eedf 0 7px,
-				#9c927e 7px 9px,
-				transparent 9px
-			);
-			background-size: 56px 44px;
-			background-position: 0 12px;
-			background-repeat: repeat-y;
+		.shell {
+			display: grid;
+			grid-template-columns: 28% minmax(0, 1fr);
+			gap: 0 clamp(32px, 4vw, 54px);
+			align-items: start;
+			padding: 44px 32px 90px;
 		}
 
-		/* The left padding clears the binding (56px) and then reproduces the
-		   mockup's 54px gutter, so content starts at 110px exactly as it did
-		   there. The binding itself is pinned to the viewport, not to this
-		   container, so on a wide screen paper shows between the two. */
-		.sheet {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-			grid-template-areas:
-				'nav nav'
-				'intro laptop'
-				'scrap build';
-			align-items: start;
-			column-gap: 32px;
-			row-gap: 28px;
-			padding: 40px 80px 80px 110px;
+		.main {
+			margin-top: 0;
+		}
+
+		/* The divider between the two columns. `stretch` overrides the grid's
+		   `start` alignment so the rule runs the full height of the taller
+		   column rather than stopping under the last line of text. */
+		.who {
+			align-self: stretch;
+			padding-right: clamp(32px, 4vw, 54px);
+			border-right: 1px solid var(--line);
+		}
+
+		.portrait {
+			width: 190px;
+			max-width: 100%;
+		}
+
+		.scene {
+			position: relative;
+			display: block;
+			margin-top: 34px;
+			container-type: inline-size;
+			/* Room for the cards, which hang off the illustration's corners. */
+			padding: 3% 0 9%;
+		}
+
+		.card {
+			position: absolute;
+			z-index: 4;
+			width: 38%;
+		}
+
+		.card-project {
+			top: 0;
+			left: -5%;
+			transform: rotate(-2.4deg);
+		}
+
+		.card-writing {
+			right: -4%;
+			bottom: 0;
+			transform: rotate(1.8deg);
+		}
+
+		.mark {
+			display: block;
+			position: absolute;
+			z-index: 3;
+			height: auto;
+		}
+
+		/* Sweeps down off the desk toward the writing card. */
+		.mark-arrow {
+			right: 38%;
+			bottom: 14%;
+			width: 9.5%;
+			transform: rotate(14deg);
+		}
+
+		.mark-star {
+			top: 4%;
+			right: 16%;
+			width: 5.4%;
+		}
+
+		.mark-ticks {
+			bottom: 10%;
+			left: 1%;
+			width: 7%;
+			transform: rotate(-16deg);
+		}
+	}
+
+	/* --- narrow phones ---------------------------------------------------- */
+
+	@media (max-width: 420px) {
+		.shell {
+			padding: 26px 16px 60px;
 		}
 
 		.nav {
-			grid-area: nav;
-			justify-self: end;
+			gap: 14px;
+			font-size: 23px;
 		}
 
-		.intro {
-			grid-area: intro;
-		}
-
-		/* A small drop, as in the mockup — but not so much that it stretches
-		   the row and pushes the scrap away from the paragraph. */
-		.laptop {
-			grid-area: laptop;
-			margin-top: 24px;
-		}
-
-		.scrap {
-			grid-area: scrap;
-		}
-
-		/* Starts the arrow just under the scrap's top edge, so the 70px arrow
-		   plus the column gap drop the note to roughly 80px below it — the
-		   offset the mockup had between the two. */
-		.build {
-			grid-area: build;
-			margin-top: 10px;
+		.logo img {
+			width: 38px;
+			height: 38px;
 		}
 	}
 </style>
