@@ -550,9 +550,17 @@ const CODE = [
 		   natural height and leaving the rest of the screen blank. */
 		.page {
 			--shell-pad-y: 36px;
+			--shell-max: 1400px;
+			/* What `margin: 0 auto` leaves to the left of the shell once the
+			   screen is wider than the cap. No vertical scrollbar gets this
+			   far (the layout is one screenful), so 100vw is the real width. */
+			--gutter: max(0px, (100vw - var(--shell-max)) / 2);
 			/* Past this much column, spreading the four blocks further apart
 			   stops reading as composition and starts reading as gaps. */
 			--who-spread: 780px;
+			/* A comfortable measure for the sidebar, so pulling it out to the
+			   edge widens the column without stretching the text across it. */
+			--who-measure: 340px;
 
 			display: flex;
 			flex-direction: column;
@@ -566,7 +574,12 @@ const CODE = [
 			grid-template-rows: minmax(0, 1fr);
 			flex: 1;
 			gap: 0 clamp(32px, 4vw, 54px);
-			max-width: 1400px;
+			/* The auto side margins that centre the shell also stop a flex
+			   child from stretching, so without an explicit width it sizes to
+			   its content — which collapses the moment the columns stop
+			   having a wide intrinsic size of their own. */
+			width: 100%;
+			max-width: var(--shell-max);
 			padding: var(--shell-pad-y) 32px;
 		}
 
@@ -578,8 +591,14 @@ const CODE = [
 		}
 
 		/* Stretched by the grid's default alignment, so the divider runs the
-		   full height of the row rather than stopping under the last line. */
+		   full height of the row rather than stopping under the last line.
+		   The negative margin pulls the sidebar back out of the centred shell
+		   so it sits a modest margin in from the edge of the screen instead
+		   of floating in the middle of its column. Only the left edge moves:
+		   the right edge stays on the grid line, so the divider does not
+		   shift. */
 		.who {
+			margin-left: calc(-1 * var(--gutter));
 			justify-content: space-between;
 			gap: 20px;
 			/* Absorbs whatever height is left over beyond --who-spread, so a
@@ -589,6 +608,16 @@ const CODE = [
 			padding-block: max(0px, calc((100vh - 2 * var(--shell-pad-y) - var(--who-spread)) / 2));
 			padding-right: clamp(32px, 4vw, 54px);
 			border-right: 1px solid var(--line);
+		}
+
+		/* The pull above makes the column as wide as the gutter was. These
+		   would otherwise stretch to fill it — the bio's lines running long
+		   and the rule reaching most of the way to the divider. Capping them
+		   holds the sidebar to one measure off the shared left edge. */
+		.who-name,
+		.who .bio,
+		.who-facts {
+			max-width: var(--who-measure);
 		}
 
 		/* space-between owns the spacing here; the authored margins that set
