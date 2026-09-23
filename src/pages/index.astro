@@ -2,9 +2,10 @@
   <head>
     <meta charset="UTF-8" />
     <title>Keith Rodrigues</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" />  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" />
   </head>
   <body>
     <div class="page">
@@ -109,7 +110,8 @@
 
   .portrait img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    aspect-ratio: 1;
     border-radius: 50%;
     border: 3px solid #221605;
     object-fit: cover;
@@ -281,5 +283,57 @@
     height: auto;
   }
 
+  .go {
+    color: #0b44c4;
+    text-decoration: none;
+  }
   
+  .go:hover {
+    text-decoration: underline;
+  }
+
+  /* --- mobile --- */
+
+  @media (max-width: 800px) {
+    .page {
+      flex-direction: column;
+      height: auto;
+      overflow: visible;
+    }
+
+    .who {
+      width: 100%;
+      height: auto;
+      border-right: none;
+      border-bottom: 3px solid #0e0a01;
+    }
+
+    .main {
+      padding: 20px;
+    }
+
+    .nav {
+      gap: 20px;
+      margin: -20px -20px 0;
+      padding: 10px 10px 10px;
+      font-size: 22px;
+    }
+    
+    .card,
+    .clip {
+      position: relative;
+      inset: auto;
+      width: 80%;
+      margin: -40px auto 0;
+    }
+    
+    .screen {
+      display: none;
+    }
+    
+    .go {
+      color: #0b44c4;
+      text-decoration: underline;
+    }
+  }  
 </style>
