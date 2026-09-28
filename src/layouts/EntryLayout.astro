@@ -1,5 +1,6 @@
 ---
 import SiteLayout from './SiteLayout.astro';
+import Book from '../components/Book.astro';
 
 interface Props {
 	title: string;
@@ -18,11 +19,26 @@ const pretty = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric'
 
 <SiteLayout title={title}>
 	<article class={`entry entry-${kind}`}>
-		<h1>{title}</h1>
-		<p class="entry-date">
-			{kind === 'project' && <strong>Last updated: </strong>}<time datetime={iso}>{pretty}</time>
-		</p>
-		<slot />
+		{kind === 'writing' ? (
+			<Book>
+				<Fragment slot="left">
+					<h1 class="leaf-title">{title}</h1>
+					<p class="entry-date"><time datetime={iso}>{pretty}</time></p>
+					<a class="back-link" href="/writing">← Back to contents</a>
+				</Fragment>
+				<Fragment slot="right">
+					<slot />
+				</Fragment>
+			</Book>
+		) : (
+			<>
+				<h1>{title}</h1>
+				<p class="entry-date">
+					<strong>Last updated: </strong><time datetime={iso}>{pretty}</time>
+				</p>
+				<slot />
+			</>
+		)}
 	</article>
 </SiteLayout>
 
@@ -37,5 +53,23 @@ const pretty = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric'
     font-size: 44px;
     font-weight: 600;
     margin: 20px 0 0;
+  }
+
+  .entry-writing {
+    line-height: 1.6;
+  }
+
+  .entry-writing .entry-date {
+    color: #7a705c;
+    margin: 0 0 16px;
+  }
+
+  .back-link {
+    color: #0b44c4;
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
   }
 </style>

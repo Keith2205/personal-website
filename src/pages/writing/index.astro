@@ -1,29 +1,52 @@
 ---
 import { getCollection } from 'astro:content';
 import SiteLayout from '../../layouts/SiteLayout.astro';
+import Book from '../../components/Book.astro';
 
 const poems = await getCollection('poems');
 const stories = await getCollection('stories');
 ---
 
 <SiteLayout title="Writing">
-	<h1>Writing</h1>
+  <Book>
+    <Fragment slot="left">
+      <h2 class="leaf-title">Poems</h2>
+      <ul class="toc">
+        {poems.map((p) => (
+          <li><a href={`/writing/poems/${p.id}`}>{p.data.title}</a></li>
+        ))}
+      </ul>
+    </Fragment>
 
-	<section>
-		<h2>Poems</h2>
-		<ul>
-			{poems.map((entry) => (
-				<li><a href={`/writing/poems/${entry.id}`}>{entry.data.title}</a></li>
-			))}
-		</ul>
-	</section>
-
-	<section>
-		<h2>Stories</h2>
-		<ul>
-			{stories.map((entry) => (
-				<li><a href={`/writing/stories/${entry.id}`}>{entry.data.title}</a></li>
-			))}
-		</ul>
-	</section>
+    <Fragment slot="right">
+      <h2 class="leaf-title">Stories</h2>
+      <ul class="toc">
+        {stories.map((s) => (
+          <li><a href={`/writing/stories/${s.id}`}>{s.data.title}</a></li>
+        ))}
+      </ul>
+    </Fragment>
+  </Book>
 </SiteLayout>
+
+<style>
+  .toc {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .toc li {
+    padding: 8px 0;
+    border-bottom: 1px dotted #b8ab8c;
+  }
+
+  .toc a {
+    color: #0b44c4;
+    text-decoration: none;
+  }
+
+  .toc a:hover {
+    text-decoration: underline;
+  }
+</style>

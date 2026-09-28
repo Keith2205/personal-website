@@ -1,0 +1,72 @@
+---
+// An open book: two facing leaves, filled through the "left" and "right" slots.
+---
+
+<div class="book">
+  <section class="leaf leaf-left">
+    <slot name="left" />
+  </section>
+
+  <section class="leaf leaf-right">
+    <slot name="right" />
+  </section>
+</div>
+
+<style>
+  .book {
+    display: flex;
+    max-width: 900px;
+    margin: 30px auto 0;
+    padding: 12px;
+    background: #0b44c4;
+    border-radius: 8px;
+    box-shadow: 4px 6px 14px rgba(0, 0, 0, 0.25);
+  }
+
+  .leaf {
+    flex: 1;
+    min-height: 60vh;
+    padding: 36px 40px;
+    background: #fbf6e9;
+  }
+
+  .leaf-left {
+    border-radius: 4px 0 0 4px;
+    box-shadow: inset -20px 0 20px -14px rgba(0, 0, 0, 0.3);
+  }
+
+  .leaf-right {
+    border-radius: 0 4px 4px 0;
+    box-shadow: inset 20px 0 20px -14px rgba(0, 0, 0, 0.3);
+  }
+
+  .book :global(.leaf-title) {
+    font-family: 'Caveat', cursive;
+    font-size: 36px;
+    font-weight: 600;
+    margin: 0 0 16px;
+  }
+
+  @media (max-width: 800px) {
+    .book {
+      flex-direction: column;
+      padding: 8px;
+      margin-top: 20px;
+    }
+
+    .leaf {
+      min-height: 0;
+      padding: 24px 20px;
+    }
+
+    .leaf-left {
+      border-radius: 4px 4px 0 0;
+      box-shadow: none;
+    }
+
+    .leaf-right {
+      border-radius: 0 0 4px 4px;
+      box-shadow: none;
+    }
+  }
+</style>
