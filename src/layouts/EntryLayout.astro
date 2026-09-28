@@ -1,16 +1,14 @@
 ---
 import SiteLayout from './SiteLayout.astro';
-import PageLayout from './PageLayout.astro';
 
 interface Props {
 	title: string;
 	date: Date;
-	/** Projects keep the sidebar (SiteLayout); writing goes full-width (PageLayout). */
-	layout: 'site' | 'page';
+	/** Projects get the wider entry styles and a "Last updated" label. */
+	kind: 'project' | 'writing';
 }
 
-const { title, date, layout } = Astro.props;
-const Layout = layout === 'site' ? SiteLayout : PageLayout;
+const { title, date, kind } = Astro.props;
 
 // Frontmatter dates parse as UTC midnight, so format in UTC too; local
 // formatting would render the previous day west of Greenwich.
@@ -18,23 +16,23 @@ const iso = date.toISOString().slice(0, 10);
 const pretty = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' });
 ---
 
-<Layout title={title}>
-	<article class={`entry entry-${layout}`}>
+<SiteLayout title={title}>
+	<article class={`entry entry-${kind}`}>
 		<h1>{title}</h1>
 		<p class="entry-date">
-			{layout === 'site' && <strong>Last updated: </strong>}<time datetime={iso}>{pretty}</time>
+			{kind === 'project' && <strong>Last updated: </strong>}<time datetime={iso}>{pretty}</time>
 		</p>
 		<slot />
 	</article>
-</Layout>
+</SiteLayout>
 
 <style>
-  .entry-site {
+  .entry-project {
     max-width: 150ch;
     line-height: 1.5;
   }
 
-  .entry-site h1 {
+  .entry-project h1 {
     font-family: 'Caveat', cursive;
     font-size: 44px;
     font-weight: 600;
