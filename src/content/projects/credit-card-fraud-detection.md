@@ -1,6 +1,8 @@
 ---
 title: "Credit Card Fraud Detection"
 date: 2026-09-16
+summary: "Compared scikit-learn, XGBoost and neural network models for spotting fraudulent card transactions."
+tech: ["Python", "scikit-learn", "XGBoost", "TensorFlow/Keras", "pandas"]
 ---
 
 A comparative study of ten models on credit card fraud detection: five classical

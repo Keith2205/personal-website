@@ -1,12 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageLayout from '../../layouts/PageLayout.astro';
 
 const poems = await getCollection('poems');
 const stories = await getCollection('stories');
 ---
 
-<BaseLayout title="Writing">
+<PageLayout title="Writing">
 	<h1>Writing</h1>
 
 	<section>
@@ -26,4 +26,4 @@ const stories = await getCollection('stories');
 			))}
 		</ul>
 	</section>
-</BaseLayout>
+</PageLayout>

@@ -10,7 +10,10 @@ const baseSchema = z.object({
 
 const projects = defineCollection({
 	loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
-	schema: baseSchema,
+	schema: baseSchema.extend({
+		summary: z.string(),
+		tech: z.array(z.string()),
+	}),
 });
 
 const poems = defineCollection({
