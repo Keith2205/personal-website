@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 import EntryLayout from '../../../layouts/EntryLayout.astro';
+import { readingMinutes } from '../../../lib/reading-time';
 
 export const getStaticPaths = (async () => {
 	const stories = await getCollection('stories');
@@ -13,8 +14,9 @@ export const getStaticPaths = (async () => {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+const readMinutes = readingMinutes(entry.body ?? '');
 ---
 
-<EntryLayout title={entry.data.title} date={entry.data.date} kind="writing">
+<EntryLayout title={entry.data.title} date={entry.data.date} kind="writing" form="story" readMinutes={readMinutes}>
 	<Content />
 </EntryLayout>
