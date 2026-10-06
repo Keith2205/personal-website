@@ -1,8 +1,145 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
+import { timeline } from '../data/timeline';
 ---
 
 <SiteLayout title="About">
-	<h1>About</h1>
-	<p>Before I ever wrote code, I wanted to play football for my county. That didn’t happen, so I picked the other thing I’d loved since school — computers, because they’re logical: they do exactly what you tell them, or show you exactly where you went wrong. Now I build backend systems for a living. The part of me that wanted the pitch never left, though. It just found other ways out — which is what most of this site is: poems, stories, and the things I build along the way.</p>
+  <h2 class="about-title">About me</h2>
+  <p class="about-intro">
+    The sidebar is the short version. Here's the long one: my life so far,
+    written the way I know best, as a git log. Based in New Brunswick, NJ, and
+    looking for my first software engineering role.
+  </p>
+
+  <p class="log-cmd">$ git log --life</p>
+  <ol class="timeline">
+    {timeline.map((entry) => (
+      <li class:list={['commit', { 'commit-branch': entry.branch, 'commit-release': entry.release }]}>
+        <p class="commit-meta">{entry.branch ? `branch: ${entry.branch}` : entry.date}</p>
+        <p class="commit-msg">
+          <code>{entry.message}</code>
+          {entry.branch && <span class="merged-tag">merged</span>}
+        </p>
+        <p class="commit-body">{entry.body}</p>
+      </li>
+    ))}
+  </ol>
 </SiteLayout>
+
+<style>
+  .timeline {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 34px;
+    max-width: 70ch;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 9px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: #2a2620;
+  }
+
+  .commit {
+    position: relative;
+    margin: 0 0 24px;
+  }
+
+  .commit::before {
+    content: "";
+    position: absolute;
+    left: -32px;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #0b44c4;
+    border: 2px solid #2a2620;
+  }
+
+  .commit-meta {
+    margin: 0 0 2px;
+    font-family: ui-monospace, monospace;
+    font-size: 12px;
+    color: #7a705c;
+  }
+
+  .commit-msg {
+    margin: 0 0 6px;
+  }
+
+  .commit-msg code {
+    font-size: 15px;
+    color: #0b44c4;
+  }
+
+  .commit-body {
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .commit-branch {
+    margin-left: 26px;
+    padding-left: 22px;
+    border-left: 2px dashed #7a705c;
+  }
+
+  .commit-branch::before {
+    left: -8px;
+    width: 10px;
+    height: 10px;
+    background: #fbe38e;
+  }
+
+  .merged-tag {
+    margin-left: 8px;
+    padding: 0 6px;
+    font-family: ui-monospace, monospace;
+    font-size: 11px;
+    color: #7a705c;
+    border: 1px solid #7a705c;
+    border-radius: 999px;
+  }
+
+  .commit-release::before {
+    left: -33px;
+    width: 14px;
+    height: 14px;
+    background: #fbe38e;
+  }
+
+  .commit-release::after {
+    content: "";
+    position: absolute;
+    left: -27px;
+    width: 6px;
+    top: 22px;
+    bottom: -10px;
+    background: #f4eedf;
+  }
+
+  .about-title {
+    margin: 20px 0 8px;
+    font-family: 'Caveat', cursive;
+    font-size: 44px;
+    font-weight: 600;
+  }
+
+  .about-intro {
+    max-width: 70ch;
+    margin: 0 0 20px;
+    line-height: 1.6;
+  }
+
+  .log-cmd {
+    margin: 0 0 14px;
+    font-family: ui-monospace, monospace;
+    font-size: 13px;
+    color: #7a705c;
+  }
+</style>
