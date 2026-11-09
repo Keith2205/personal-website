@@ -239,6 +239,48 @@ const pretty = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric'
     margin: 20px 0 0;
   }
 
+  .entry-project :global(h2) {
+    font-family: 'Caveat', cursive;
+    font-size: 34px;
+    font-weight: 600;
+    margin: 32px 0 0;
+  }
+
+  /* Wide tables scroll sideways on their own instead of the page. */
+  .entry-project :global(table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 15px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .entry-project :global(th),
+  .entry-project :global(td) {
+    padding: 6px 12px;
+    border-bottom: 1px solid #d8ccb0;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .entry-project :global(th:first-child),
+  .entry-project :global(td:first-child) {
+    text-align: left;
+  }
+
+  .entry-project :global(th) {
+    border-bottom: 2px solid #0e0a01;
+  }
+
+  .entry-project :global(img) {
+    display: block;
+    width: 100%;
+    max-width: 720px;
+    height: auto;
+    margin: 24px 0;
+  }
+
   .entry-writing {
     line-height: 1.6;
   }
