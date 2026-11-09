@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import SiteLayout from '../../layouts/SiteLayout.astro';
+import { wip, progressOf } from '../../data/wip';
 
 const projects = await getCollection('projects');
 ---
@@ -19,6 +20,57 @@ const projects = await getCollection('projects');
       </a>
     ))}
   </section>
+
+  {wip.length > 0 && (
+    <section class="wip" aria-labelledby="wip-heading">
+      <h2 id="wip-heading" class="wip-heading">Work in progress</h2>
+      <div class="wip-list">
+        {wip.map((project) => {
+          const { done, total, percent } = progressOf(project);
+          return (
+            <article class="wip-card">
+              <h3 class="wip-title">{project.title}</h3>
+              <p class="wip-description">{project.description}</p>
+              {project.tech && project.tech.length > 0 && (
+                <ul class="note-tags">
+                  {project.tech.map((t) => <li>{t}</li>)}
+                </ul>
+              )}
+              <div class="wip-progress">
+                <div
+                  class="wip-bar"
+                  role="progressbar"
+                  aria-label={`${project.title} progress`}
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow={percent}
+                  aria-valuetext={`${done} of ${total} milestones done`}
+                >
+                  <div class="wip-bar-fill" style={`width: ${percent}%`}></div>
+                </div>
+                <span class="wip-count">{done} of {total} · {percent}%</span>
+              </div>
+              <details class="wip-details">
+                <summary>View progress</summary>
+                <ol class="wip-milestones">
+                  {project.milestones.map((m) => (
+                    <li class:list={[m.done && 'is-done']}>
+                      <span class="wip-mark" aria-hidden="true">{m.done ? '✓' : '○'}</span>
+                      <span class="sr-only">{m.done ? 'Done: ' : 'To do: '}</span>
+                      {m.label}
+                    </li>
+                  ))}
+                </ol>
+              </details>
+              {project.repo && (
+                <a class="wip-repo" href={project.repo}>Follow along on GitHub →</a>
+              )}
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  )}
 </SiteLayout>
 
 <style>
@@ -96,10 +148,147 @@ const projects = await getCollection('projects');
     text-decoration: underline;
   }
 
+  /* --- work in progress --- */
+
+  .wip {
+    margin-top: 50px;
+  }
+
+  .wip-heading {
+    font-family: 'Caveat', cursive;
+    font-size: 40px;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-bottom: 6px;
+    border-bottom: 3px solid #0e0a01;
+  }
+
+  .wip-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    align-items: start;
+  }
+
+  .wip-card {
+    padding: 22px 24px;
+    border: 3px solid #2a2620;
+    background: #fbf6e9;
+    color: #3a2f10;
+  }
+
+  .wip-title {
+    font-family: 'Caveat', cursive;
+    font-size: 30px;
+    line-height: 1.1;
+    margin: 0 0 8px;
+  }
+
+  .wip-description {
+    margin: 0 0 14px;
+    line-height: 1.5;
+  }
+
+  .wip-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .wip-bar {
+    flex: 1;
+    height: 12px;
+    border: 2px solid #2a2620;
+    border-radius: 999px;
+    background: #efe6cf;
+    overflow: hidden;
+  }
+
+  .wip-bar-fill {
+    height: 100%;
+    background: #9cd2f2;
+  }
+
+  .wip-count {
+    flex-shrink: 0;
+    font-size: 14px;
+    color: #7a705c;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .wip-details summary {
+    cursor: pointer;
+    color: #0b44c4;
+    width: fit-content;
+  }
+
+  .wip-details summary:hover {
+    text-decoration: underline;
+  }
+
+  .wip-milestones {
+    list-style: none;
+    margin: 10px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .wip-milestones li {
+    display: flex;
+    gap: 10px;
+    color: #7a705c;
+  }
+
+  .wip-milestones li.is-done {
+    color: #3a2f10;
+  }
+
+  .wip-mark {
+    width: 1em;
+    flex-shrink: 0;
+    text-align: center;
+  }
+
+  .is-done .wip-mark {
+    color: #2e7d32;
+    font-weight: 600;
+  }
+
+  .wip-repo {
+    display: inline-block;
+    margin-top: 14px;
+    color: #0b44c4;
+    text-decoration: none;
+  }
+
+  .wip-repo:hover {
+    text-decoration: underline;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
   @media (max-width: 800px) {
     .board {
       padding: 25px;
 	  min-height: 0;
+    }
+
+    .wip {
+      margin-top: 35px;
+    }
+
+    .wip-list {
+      grid-template-columns: 1fr;
     }
   }
 </style>
